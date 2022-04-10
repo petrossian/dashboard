@@ -14,7 +14,10 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = DB::table('employees')->join('employee_company', 'employees.id', '=', 'employee_company.employee_id')->get();
+        $employees = DB::table('employees')
+        ->join('employee_company', 'employees.id', '=', 'employee_company.employee_id')
+        ->join('companies', 'companies.id', '=', 'employee_company.company_id')
+        ->get();
         return view('employees', compact('employees'));
     }
 
@@ -25,7 +28,8 @@ class EmployeesController extends Controller
      */
     public function create()
     {
-        return view('employeescreate');
+        $companies = DB::table('companies')->join('logos', 'logos.company_id', '=', 'companies.id')->get();
+        return view('employeescreate', compact('companies'));
     }
 
     /**
@@ -68,7 +72,12 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = DB::table('employees')
+        ->join('employee_company', 'employees.id', '=', 'employee_company.employee_id')
+        ->join('companies', 'companies.id', '=', 'employee_company.company_id')
+        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->first();
+        return view('employeeshow', compact('employee'));
     }
 
     /**

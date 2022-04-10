@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">New Company</div>
+                <div class="card-header">New Employee</div>
 
                 <nav>
                     <a class="nav-link" href="/home">Home</a>
@@ -41,7 +41,13 @@
                             <br>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control-file" name="company_id">
+                            <select name="company_id">
+                                @foreach ($companies as $company)
+                                    <option value="{{$company->id}}">
+                                        {{$company->name}}
+                                    </option>
+                                @endforeach
+                            </select>
                             <br>
                         </div>
                         <br>

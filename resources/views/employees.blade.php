@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Companies</div>
+                <div class="card-header">Employees</div>
                 <div class="card-body">
                     <nav>
                         <a class="nav-link" href="/home">Home</a>
@@ -24,6 +24,7 @@
                     <th>Email</th>
                     <th>Phon</th>
                     <th>Company ID</th>
+                    <th>Company Name</th>
                     <th>SHOW</th>
                     <th>EDIT</th>
                     <th>DELETE</th>
@@ -38,6 +39,7 @@
                         <td>{{ $employee->email }}</td>
                         <td>{{ $employee->phone }}</td>
                         <td>{{ $employee->company_id }}</td>
+                        <td>{{ $employee->name }}</td>
                         <td><a href="/employees/{{ $employee->id }}" class="text-success">SHOW</a></td>
                         <td><a href="/employees/{{ $employee->id }}/edit" class="text-primary">EDIT</a></td>
                         <td>
