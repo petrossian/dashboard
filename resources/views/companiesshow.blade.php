@@ -19,36 +19,34 @@
                             <p class="d-flex justify-content-around">
                                 <span class="text-success">
                                     <i class="fa fa-user"></i>
-                                    {{$employee->first_name}} {{$employee->last_name}}
+                                    {{$company->name}}
                                 </span>
                                 <span>
                                     <i class="fa fa-phone"></i>
-                                    {{$employee->phone}}
+                                    {{$company->website}}
                                 </span>
                                 <span>
                                     <i class="fa fa-envelope"></i>
-                                    {{$employee->email}}
+                                    {{$company->email}}
                                 </span>
                             </p>
                             <div class="d-flex justify-content-end">
                                 <h4 class="text-dark d-flex justify-content-around">
-                                    <span>Works In</span>&nbsp;
                                     <div id="logo" style="display: block;
                                                             width: 100px;
                                                             height: 100px;
                                                             border: 1px solid black;">
-                                        <img src="./../logos/{{$employee->file}}" alt="">
+                                        <img src="./../logos/{{$company->file}}" alt="">
                                     </div>
-                                    <b class="text-success">{{$employee->name}}</b>
                                 </h4>
                             </div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-around">
-                            <a href="/employees/{{ $employee->id }}/edit" class="btn btn-outline-primary btn-sm">
+                            <a href="/companies/{{ $company->id }}/edit" class="btn btn-outline-primary btn-sm">
                                 <i class="fa fa-edit"></i>&nbsp;EDIT
                             </a>
-                            <form method="post" action="/employees/{{ $employee->id }}">
+                            <form method="post" action="/companies/{{ $company->id }}">
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-outline-danger btn-sm">

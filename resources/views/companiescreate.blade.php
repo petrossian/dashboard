@@ -9,6 +9,7 @@
 
                 <nav>
                     <a class="nav-link" href="/home">Home</a>
+                    <a class="nav-link" href="/companies">Companies</a>
                 </nav>
 
                 <div class="card-body">

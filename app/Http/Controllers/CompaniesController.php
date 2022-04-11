@@ -69,7 +69,11 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = DB::table('companies')
+        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->where('companies.id', '=', $id)
+        ->first();
+        return view('companiesshow', compact('company'));
     }
 
     /**
@@ -80,7 +84,11 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = DB::table('companies')
+        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->where('companies.id', '=', $id)
+        ->first();
+        return view('companiesedit', compact('company'));
     }
 
     /**
@@ -92,7 +100,16 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $company = DB::table('companies')
+        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->where('companies.id', '=', $id)
+        ->first();
+        DB::table('companies')->where('id', $id)->update([
+            'name'=> $request->input('name') != null ? $request->input('name') : $company->name,
+            'website'=> $request->input('website') != null ? $request->input('website') : $company->website,
+            'email'=> $request->input('email') != null ? $request->input('email') : $company->email
+        ]);
+        return back();
     }
 
     /**
@@ -104,6 +121,6 @@ class CompaniesController extends Controller
     public function destroy($id)
     {
         DB::table('companies')->where('id', $id)->delete();
-        return back();
+        return redirect("/companies");
     }
 }

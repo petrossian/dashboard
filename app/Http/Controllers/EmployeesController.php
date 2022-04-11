@@ -88,7 +88,13 @@ class EmployeesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = DB::table('employees')
+        ->join('employee_company', 'employees.id', '=', 'employee_company.employee_id')
+        ->join('companies', 'companies.id', '=', 'employee_company.company_id')
+        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->select('employees.id', 'employees.first_name','employees.last_name','employees.email','employees.phone','logos.file', 'companies.name')
+        ->first();
+        return view('employeesedit', compact('employee'));
     }
 
     /**
@@ -100,7 +106,19 @@ class EmployeesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $employee = DB::table('employees')
+        ->join('employee_company', 'employees.id', '=', 'employee_company.employee_id')
+        ->join('companies', 'companies.id', '=', 'employee_company.company_id')
+        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->select('employees.id', 'employees.first_name','employees.last_name','employees.email','employees.phone','logos.file', 'companies.name')
+        ->first();
+        DB::table('employees')->where('id', $id)->update([
+            'first_name'=> $request->input('first_name') != null ? $request->input('first_name') : $employee->first_name,
+            'last_name'=> $request->input('last_name') != null ? $request->input('last_name') : $employee->last_name,
+            'phone'=> $request->input('phone') != null ? $request->input('phone') : $employee->phone,
+            'email'=> $request->input('email') != null ? $request->input('email') : $employee->email
+        ]);
+        return back();
     }
 
     /**
@@ -112,6 +130,6 @@ class EmployeesController extends Controller
     public function destroy($id)
     {
         DB::table('employees')->where('id', $id)->delete();
-        return back();
+        return redirect("/employees");
     }
 }
