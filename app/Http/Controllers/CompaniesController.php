@@ -14,7 +14,9 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = DB::table('companies')->join('logos', 'logos.company_id', '=', 'companies.id')->get();
+        $companies = DB::table('companies')->leftJoin('logos', 'logos.company_id', '=', 'companies.id')
+        ->select('companies.id','companies.name', 'companies.email','companies.website','logos.file')
+        ->paginate(10);
         return view('companies', compact('companies'));
     }
 
@@ -70,8 +72,9 @@ class CompaniesController extends Controller
     public function show($id)
     {
         $company = DB::table('companies')
-        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->leftJoin('logos', 'logos.company_id', '=', 'companies.id')
         ->where('companies.id', '=', $id)
+        ->select('companies.id','companies.name', 'companies.email','companies.website','logos.file')
         ->first();
         return view('companiesshow', compact('company'));
     }
@@ -85,8 +88,9 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         $company = DB::table('companies')
-        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->leftJoin('logos', 'logos.company_id', '=', 'companies.id')
         ->where('companies.id', '=', $id)
+        ->select('companies.id','companies.name', 'companies.email','companies.website','logos.file')
         ->first();
         return view('companiesedit', compact('company'));
     }
@@ -101,8 +105,9 @@ class CompaniesController extends Controller
     public function update(Request $request, $id)
     {
         $company = DB::table('companies')
-        ->join('logos', 'logos.company_id', '=', 'companies.id')
+        ->leftJoin('logos', 'logos.company_id', '=', 'companies.id')
         ->where('companies.id', '=', $id)
+        ->select('companies.id','companies.name', 'companies.email','companies.website','logos.file')
         ->first();
         DB::table('companies')->where('id', $id)->update([
             'name'=> $request->input('name') != null ? $request->input('name') : $company->name,
